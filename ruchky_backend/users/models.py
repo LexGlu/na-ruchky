@@ -3,8 +3,31 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from ruchky_backend.users.managers import UserManager
-from ruchky_backend.helpers.db.models import UUIDMixin
+from ruchky_backend.helpers.db.models import UUIDMixin, DateTimeMixin, generate_filename
 from ruchky_backend.helpers.db.validators import phone_validator
+from ruchky_backend.helpers.storage import storage
+
+
+class OrganizationProfile(UUIDMixin, DateTimeMixin):
+    """
+    Holds additional fields for organizational or charity users.
+    Linked via OneToOneField to the main User model.
+    """
+
+    name = models.CharField(_("Organization Name"), max_length=255)
+    address = models.CharField(_("Address"), max_length=255, blank=True, null=True)
+    is_charity = models.BooleanField(_("Is Charity"), default=False)
+
+    logo = models.ImageField(
+        verbose_name=_("Organization Logo"),
+        upload_to=generate_filename,
+        storage=storage,
+        blank=True,
+        null=True,
+    )
+
+    def __str__(self):
+        return self.name
 
 
 class User(AbstractUser, UUIDMixin):
@@ -21,6 +44,15 @@ class User(AbstractUser, UUIDMixin):
         validators=[phone_validator],
         blank=True,
         null=True,
+    )
+
+    organization = models.ForeignKey(
+        OrganizationProfile,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="users",
+        verbose_name=_("Organization"),
     )
 
     objects = UserManager()
