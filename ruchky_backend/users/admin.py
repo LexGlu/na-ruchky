@@ -1,30 +1,33 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
+from django.utils.html import format_html
+from django.urls import reverse
 
 from ruchky_backend.users.models import User, OrganizationProfile
-
-
-class UserInline(admin.TabularInline):
-    """
-    Inline to show/edit multiple users under a single OrganizationProfile.
-    """
-
-    model = User
-    extra = 1
 
 
 @admin.register(OrganizationProfile)
 class OrganizationProfileAdmin(admin.ModelAdmin):
     """
-    Admin for the organization or charity profile.
-    Allows inlining User records so that
-    multiple staff can belong to the same organization.
+    Admin for the organization or charity profile with read-only user display.
     """
 
-    list_display = ("id", "name", "is_charity", "address")
+    list_display = ("id", "name", "is_charity", "address", "get_users")
     search_fields = ("name", "address")
-    inlines = [UserInline]
+    readonly_fields = ("get_users",)
+
+    @admin.display(description="Users")
+    def get_users(self, obj: OrganizationProfile):
+        users = obj.users.all()
+        if not users:
+            return "-"
+
+        user_links = []
+        for user in users:
+            url = reverse("admin:users_user_change", args=[user.id])
+            user_links.append(f'<a href="{url}">{user.email}</a>')
+        return format_html("<br>".join(user_links))
 
 
 @admin.register(User)

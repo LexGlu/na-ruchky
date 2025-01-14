@@ -2,6 +2,8 @@ from ninja import NinjaAPI
 from django.contrib.admin.views.decorators import staff_member_required
 
 from ruchky_backend.users.api import router as users_router
+from ruchky_backend.pets.api import pets_router, pet_listings_router
+
 
 api = NinjaAPI(
     title="Na Ruchky API",
@@ -11,3 +13,5 @@ api = NinjaAPI(
 )
 
 api.add_router("/users/", users_router)
+api.add_router("/pets/", pets_router)
+api.add_router("/pet-listings/", pet_listings_router)

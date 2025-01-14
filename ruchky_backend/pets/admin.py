@@ -28,3 +28,4 @@ class PetListingAdmin(admin.ModelAdmin):
         "pet__owner__first_name",
         "pet__owner__last_name",
     )
+    readonly_fields = ("views_count",)
