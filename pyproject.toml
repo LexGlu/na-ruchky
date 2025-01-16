@@ -1,7 +1,7 @@
 [project]
 name = "ruchky-backend"
 version = "0.1.0"
-description = "Na Ruchky DRF backend and Admin panel"
+description = "Na Ruchky Django Ninja backend and Django Admin panel"
 readme = "README.md"
 requires-python = ">=3.13.1"
 dependencies = [

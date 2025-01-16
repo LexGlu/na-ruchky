@@ -37,9 +37,9 @@ def generate_filename(instance: models.Model, filename: str) -> str:
     """
     f, ext = os.path.splitext(filename)
     model_name = slugify_camelcase(instance._meta.model.__name__, "_")
-    strftime = timezone.datetime.now().strftime("%Y/%m/%d")
+    strftime = timezone.datetime.now()
     hex_ = uuid4().hex
-    return f"{model_name}/{strftime}/{hex_}{ext}"
+    return f"{model_name}/{hex_}_{strftime}{ext}"
 
 
 class UUIDMixin(models.Model):

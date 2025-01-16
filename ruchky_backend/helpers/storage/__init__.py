@@ -33,15 +33,11 @@ class StorageProvider:
         """Initialize the appropriate storage backend."""
         if settings.DEBUG:
             self._storage = FileSystemStorage()
-            logger.info("Initialized FileSystemStorage for development")
             return
 
         try:
             self._storage = MediaRootGoogleCloudStorage(
                 bucket_name=settings.GS_BUCKET_NAME
-            )
-            logger.info(
-                f"Initialized Google Cloud Storage with bucket: {settings.GS_BUCKET_NAME}"
             )
         except Exception as e:
             logger.error(

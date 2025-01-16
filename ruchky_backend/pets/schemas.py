@@ -10,6 +10,8 @@ class PetSchema(ModelSchema):
 
 
 class PetListingSchema(ModelSchema):
+    pet: PetSchema
+
     class Meta:
         model = PetListing
         fields = "__all__"

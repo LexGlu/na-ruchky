@@ -7,7 +7,7 @@ from ninja import Router
 from ninja.pagination import paginate
 
 from ruchky_backend.pets.schemas import PetSchema, PetListingSchema
-from ruchky_backend.pets.models import Pet, PetListing, Species, ListingStatus
+from ruchky_backend.pets.models import Pet, PetListing, Sex, Species, ListingStatus
 
 pets_router = Router(tags=["pets"])
 pet_listings_router = Router(tags=["pet_listings"])
@@ -18,6 +18,7 @@ pet_listings_router = Router(tags=["pet_listings"])
 def list_pets(
     request: HttpRequest,
     species: Species = None,
+    sex: Sex = None,
     min_age: int = None,
     max_age: int = None,
     name: str = None,
@@ -31,6 +32,8 @@ def list_pets(
 
     if species:
         pets = pets.filter(species=species)
+    if sex:
+        pets = pets.filter(sex=sex)
     if min_age:
         pets = pets.filter(age__gte=min_age)
     if max_age:
@@ -64,6 +67,7 @@ def list_pet_listings(
     min_price: int = None,
     max_price: int = None,
     species: Species = None,
+    sex: Sex = None,
     name: str = None,
     breed: str = None,
     location: str = None,
@@ -85,6 +89,8 @@ def list_pet_listings(
         pet_listings = pet_listings.filter(price__lte=max_price)
     if species:
         pet_listings = pet_listings.filter(pet__species=species)
+    if sex:
+        pet_listings = pet_listings.filter(pet__sex=sex)
     if name:
         pet_listings = pet_listings.filter(pet__name__icontains=name)
     if breed:
