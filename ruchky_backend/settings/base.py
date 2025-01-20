@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Project apps
+    "ruchky_backend.auth",
     "ruchky_backend.users",
     "ruchky_backend.pets",
     # Third Party Apps
