@@ -12,4 +12,8 @@ class UserSchema(ModelSchema):
             "user_permissions",
             "is_staff",
             "is_superuser",
+            "groups",
+            "is_active",
+            "date_joined",
+            "organization",
         ]

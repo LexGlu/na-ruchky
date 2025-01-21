@@ -57,9 +57,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -168,9 +168,6 @@ INTERNAL_IPS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOW_CREDENTIALS = True
-
 AUTH_USER_MODEL = "users.User"
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 
@@ -194,6 +191,10 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "Na Ruchky | "
 
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS").split(",")
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = os.environ.get(  # noqa
+    "CORS_ALLOWED_ORIGINS", "http://127.0.0.1:3000,http://localhost:3000"
+).split(",")
+CSRF_TRUSTED_ORIGINS = os.environ.get(  # noqa
+    "CSRF_TRUSTED_ORIGINS", "http://127.0.0.1:3000,http://localhost:3000"
+).split(",")

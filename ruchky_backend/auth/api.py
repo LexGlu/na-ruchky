@@ -5,7 +5,7 @@ from ninja import Router
 
 from ruchky_backend.auth.schemas import UserLogin, UserRegister
 from ruchky_backend.users.schemas import UserSchema
-from ruchky_backend.helpers.api.schemas import BaseResponse, CSRFTokenResponse
+from ruchky_backend.helpers.api.schemas import BaseResponse
 
 User = get_user_model()
 
@@ -13,12 +13,14 @@ User = get_user_model()
 router = Router(tags=["auth"])
 
 
-@router.get("/csrf", response={200: CSRFTokenResponse})
+@router.get("/csrf", response={200: BaseResponse})
 def get_csrf_token(request):
     """
     Returns a CSRF token for the current session.
     """
-    return {"csrf_token": get_token(request)}
+
+    get_token(request)
+    return {"message": "CSRF token set"}
 
 
 @router.post("/login", response={200: BaseResponse, 401: BaseResponse})

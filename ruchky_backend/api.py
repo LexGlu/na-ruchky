@@ -11,6 +11,7 @@ api = NinjaAPI(
     version="0.1.0",
     description="API for Na Ruchky project",
     docs_decorator=staff_member_required,
+    csrf=True,
 )
 
 api.add_router("/auth/", auth_router)
