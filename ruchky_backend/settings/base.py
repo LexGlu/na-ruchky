@@ -14,6 +14,8 @@ import os
 
 from pathlib import Path
 
+from django.conf.locale.en import formats as en_formats
+from django.conf.locale.uk import formats as uk_formats
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Project apps
+    "ruchky_backend.auth",
     "ruchky_backend.users",
     "ruchky_backend.pets",
     # Third Party Apps
@@ -56,9 +59,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -128,13 +131,25 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGES = [
+    ("en", "English"),
+    ("uk", "Ukrainian"),
+]
 
-TIME_ZONE = "UTC"
+en_formats.DATE_FORMAT = "F j, Y"  # "February 25, 2024"
+uk_formats.DATE_FORMAT = "d E Y"  # "12 липня 2024"
+
+LOCALE_PATHS = [BASE_DIR / "locale"]
+
+LANGUAGE_CODE = os.getenv("LANGUAGE_CODE", "en")
+
+TIME_ZONE = os.getenv("TIME_ZONE", "Europe/Kyiv")
 
 USE_I18N = True
 
 USE_TZ = True
+
+LANGUAGE_COOKIE_NAME = "user_language"
 
 
 # Static files (CSS, JavaScript, Images)
@@ -167,9 +182,6 @@ INTERNAL_IPS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOW_CREDENTIALS = True
-
 AUTH_USER_MODEL = "users.User"
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 
@@ -190,9 +202,24 @@ ACCOUNT_FORMS = {
 }
 
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = os.getenv(
+    "ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL",
+    "http://127.0.0.1:3000/",
+)
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = os.getenv(
+    "ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL", "http://127.0.0.1:3000/"
+)
+
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "Na Ruchky | "
+ACCOUNT_CHANGE_EMAIL = True
+ACCOUNT_EMAIL_NOTIFICATIONS = True
 
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS").split(",")
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = os.environ.get(  # noqa
+    "CORS_ALLOWED_ORIGINS", "http://127.0.0.1:3000,http://localhost:3000"
+).split(",")
+CSRF_TRUSTED_ORIGINS = os.environ.get(  # noqa
+    "CSRF_TRUSTED_ORIGINS", "http://127.0.0.1:3000,http://localhost:3000"
+).split(",")

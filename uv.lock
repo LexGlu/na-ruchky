@@ -152,6 +152,28 @@ google = [
 ]
 
 [[package]]
+name = "dnspython"
+version = "2.7.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/b5/4a/263763cb2ba3816dd94b08ad3a33d5fdae34ecb856678773cc40a3605829/dnspython-2.7.0.tar.gz", hash = "sha256:ce9c432eda0dc91cf618a5cedf1a4e142651196bbcd2c80e89ed5a907e5cfaf1", size = 345197 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/68/1b/e0a87d256e40e8c888847551b20a017a6b98139178505dc7ffb96f04e954/dnspython-2.7.0-py3-none-any.whl", hash = "sha256:b4c34b7d10b51bcc3a5071e7b8dee77939f1e878477eeecc965e9835f63c6c86", size = 313632 },
+]
+
+[[package]]
+name = "email-validator"
+version = "2.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "dnspython" },
+    { name = "idna" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/48/ce/13508a1ec3f8bb981ae4ca79ea40384becc868bfae97fd1c942bb3a001b1/email_validator-2.2.0.tar.gz", hash = "sha256:cb690f344c617a714f22e66ae771445a1ceb46821152df8e165c5f9a364582b7", size = 48967 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d7/ee/bf0adb559ad3c786f12bcbc9296b3f5675f529199bef03e2df281fa1fadb/email_validator-2.2.0-py3-none-any.whl", hash = "sha256:561977c2d73ce3611850a06fa56b414621e0c8faa9d66f2611407d87465da631", size = 33521 },
+]
+
+[[package]]
 name = "google-api-core"
 version = "2.24.0"
 source = { registry = "https://pypi.org/simple" }
@@ -248,6 +270,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/f1/70/7703c29685631f5a7590aa73f1f1d3fa9a380e654b86af429e0934a32f7d/idna-3.10.tar.gz", hash = "sha256:12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9", size = 190490 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/76/c6/c88e154df9c4e1a2a66ccf0005a88dfb2650c1dffb6f5ce603dfbd452ce3/idna-3.10-py3-none-any.whl", hash = "sha256:946d195a0d259cbba61165e88e65941f16e9b36ea6ddb97f00452bae8b1287d3", size = 70442 },
+]
+
+[[package]]
+name = "phonenumbers"
+version = "8.13.53"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/6d/1c/5204502b40de7f7922e0171c58e1d92f0bae424a1908cabb5ff5f9286ccd/phonenumbers-8.13.53.tar.gz", hash = "sha256:b7308f21837defa567b4f961925b6c652dd5148f3e0fadbd158a10758cc63d91", size = 2296746 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/70/68/7037f173675c988aada5bfc4d43c745acd8fdcdd3aed51412615071a7fad/phonenumbers-8.13.53-py2.py3-none-any.whl", hash = "sha256:fa7b93e12b3ac9baa7b056061cfcbe4de406039f720bb539dc240bed9cc43da2", size = 2582262 },
 ]
 
 [[package]]
@@ -414,6 +445,19 @@ wheels = [
 ]
 
 [[package]]
+name = "pydantic-extra-types"
+version = "2.10.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/23/ed/69f3f3de12c02ebd58b2f66ffb73d0f5a1b10b322227897499753cebe818/pydantic_extra_types-2.10.2.tar.gz", hash = "sha256:934d59ab7a02ff788759c3a97bc896f5cfdc91e62e4f88ea4669067a73f14b98", size = 86893 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/08/da/86bc9addde8a24348ac15f8f7dcb853f78e9573c7667800dd9bc60558678/pydantic_extra_types-2.10.2-py3-none-any.whl", hash = "sha256:9eccd55a2b7935cea25f0a67f6ff763d55d80c41d86b887d88915412ccf5b7fa", size = 35473 },
+]
+
+[[package]]
 name = "python-dotenv"
 version = "1.0.1"
 source = { registry = "https://pypi.org/simple" }
@@ -460,9 +504,13 @@ dependencies = [
     { name = "django-debug-toolbar" },
     { name = "django-ninja" },
     { name = "django-storages", extra = ["google"] },
+    { name = "email-validator" },
     { name = "google-cloud-storage" },
+    { name = "phonenumbers" },
     { name = "pillow" },
     { name = "psycopg", extra = ["binary", "pool"] },
+    { name = "pydantic" },
+    { name = "pydantic-extra-types" },
     { name = "python-dotenv" },
     { name = "whitenoise" },
 ]
@@ -480,9 +528,13 @@ requires-dist = [
     { name = "django-debug-toolbar", specifier = ">=5.0.1" },
     { name = "django-ninja", specifier = ">=1.3.0" },
     { name = "django-storages", extras = ["google"], specifier = ">=1.14.4" },
+    { name = "email-validator", specifier = ">=2.2.0" },
     { name = "google-cloud-storage", specifier = ">=2.19.0" },
+    { name = "phonenumbers", specifier = ">=8.13.53" },
     { name = "pillow", specifier = ">=11.1.0" },
     { name = "psycopg", extras = ["binary", "pool"], specifier = ">=3.2.3" },
+    { name = "pydantic", specifier = ">=2.10.4" },
+    { name = "pydantic-extra-types", specifier = ">=2.10.2" },
     { name = "python-dotenv", specifier = ">=1.0.1" },
     { name = "whitenoise", specifier = ">=6.8.2" },
 ]

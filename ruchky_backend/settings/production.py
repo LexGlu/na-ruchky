@@ -8,10 +8,6 @@ SESSION_COOKIE_DOMAIN = os.environ.get("SESSION_COOKIE_DOMAIN")  # noqa
 SECURE_SSL_REDIRECT = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-CORS_ALLOWED_ORIGINS = os.environ.get(  # noqa
-    "CORS_ALLOWED_ORIGINS", "http://localhost:8001"
-).split(",")
-
 INSTALLED_APPS += ("django_cleanup.apps.CleanupConfig",)  # noqa
 
 DEFAULT_FILE_STORAGE = "portal.helpers.storages.MediaRootGoogleCloudStorage"
