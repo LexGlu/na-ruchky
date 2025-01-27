@@ -1,4 +1,6 @@
+from allauth.account.adapter import get_adapter
 from allauth.account.utils import send_email_confirmation, has_verified_email
+
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.db import IntegrityError
 from django.middleware.csrf import get_token
@@ -69,7 +71,11 @@ def register_user(request, data: UserRegister):
         send_email_confirmation(request, user)
 
     except IntegrityError:
-        return 400, {"message": _("User with that email already exists.")}
+        # Not to leak information about existing users we send the same message
+        # But user will receive an email with information that account already exists
+        adapter = get_adapter(request)
+        adapter.send_account_already_exists_mail(data.email)
+        return {"message": "success"}
     except Exception as e:
         return 500, {"message": str(e)}
 
