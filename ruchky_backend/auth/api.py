@@ -1,10 +1,11 @@
+from allauth.account.utils import send_email_confirmation, has_verified_email
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.db import IntegrityError
 from django.middleware.csrf import get_token
+from django.utils.translation import gettext as _
 from ninja import Router
 
 from ruchky_backend.auth.schemas import UserLogin, UserRegister
-from ruchky_backend.users.schemas import UserSchema
 from ruchky_backend.helpers.api.schemas import BaseResponse
 
 User = get_user_model()
@@ -20,10 +21,12 @@ def get_csrf_token(request):
     """
 
     get_token(request)
-    return {"message": "CSRF token set"}
+    return {"message": "success"}
 
 
-@router.post("/login", response={200: BaseResponse, 401: BaseResponse})
+@router.post(
+    "/login", response={200: BaseResponse, 401: BaseResponse, 403: BaseResponse}
+)
 def login_user(request, data: UserLogin):
     """
     Authenticates user using email + password.
@@ -33,9 +36,15 @@ def login_user(request, data: UserLogin):
     """
     user = authenticate(request, email=data.email, password=data.password)
     if user is not None:
+        if not has_verified_email(user):
+            send_email_confirmation(request, user)
+            return 403, {
+                "message": _("We have sent you an email to verify your email address.")
+            }
+
         login(request, user)
         return {"message": "Logged in"}
-    return 401, {"message": "Invalid credentials"}
+    return 401, {"message": _("Invalid сredentials")}
 
 
 @router.post("/logout", response={200: BaseResponse})
@@ -44,11 +53,10 @@ def logout_user(request):
     return {"message": "Logged out"}
 
 
-@router.post("/register", response={200: UserSchema, 400: BaseResponse})
+@router.post("/register", response={200: BaseResponse, 400: BaseResponse})
 def register_user(request, data: UserRegister):
     """
-    Registers a new user.
-    Returns the created user (serialized via UserSchema).
+    Registers a new user. Sends an email confirmation link upon successfull registration.
     """
     try:
         user = User.objects.create_user(
@@ -58,9 +66,11 @@ def register_user(request, data: UserRegister):
             last_name=data.last_name,
             phone=data.phone,
         )
+        send_email_confirmation(request, user)
+
     except IntegrityError:
-        return 400, {"message": "User with that email already exists."}
+        return 400, {"message": _("User with that email already exists.")}
     except Exception as e:
         return 500, {"message": str(e)}
 
-    return user
+    return {"message": "success"}
