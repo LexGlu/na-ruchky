@@ -10,11 +10,11 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 INSTALLED_APPS += ("django_cleanup.apps.CleanupConfig",)  # noqa
 
-DEFAULT_FILE_STORAGE = "portal.helpers.storages.MediaRootGoogleCloudStorage"
+# DEFAULT_FILE_STORAGE = "portal.helpers.storages.MediaRootGoogleCloudStorage"
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = os.getenv("EMAIL_HOST")  # noqa
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")  # noqa
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")  # noqa
-EMAIL_PORT = os.getenv("EMAIL_PORT", 587)  # noqa
-EMAIL_USE_TLS = True
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = os.getenv("EMAIL_HOST")  # noqa
+# EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")  # noqa
+# EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")  # noqa
+# EMAIL_PORT = os.getenv("EMAIL_PORT", 587)  # noqa
+# EMAIL_USE_TLS = True
