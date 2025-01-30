@@ -1,6 +1,9 @@
 from .base import *  # noqa
 
 DEBUG = False
+
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")  # noqa
+
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_DOMAIN = os.environ.get("SESSION_COOKIE_DOMAIN")  # noqa
