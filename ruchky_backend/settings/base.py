@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "corsheaders",
     "debug_toolbar",
+    "taggit",
 ]
 
 MIDDLEWARE = [

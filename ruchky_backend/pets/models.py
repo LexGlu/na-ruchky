@@ -1,9 +1,21 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from taggit.managers import TaggableManager
+from taggit.models import GenericUUIDTaggedItemBase, TaggedItemBase
 
-from ruchky_backend.helpers.db.models import UUIDMixin, DateTimeMixin, generate_filename
+from ruchky_backend.helpers.db.models import (
+    UUIDMixin,
+    DateTimeMixin,
+    generate_filename,
+)
 from ruchky_backend.helpers.storage import storage
 from ruchky_backend.users.models import User
+
+
+class UUIDTaggedItem(GenericUUIDTaggedItemBase, TaggedItemBase):
+    class Meta:
+        verbose_name = _("Tag")
+        verbose_name_plural = _("Tags")
 
 
 class Species(models.TextChoices):
@@ -14,6 +26,12 @@ class Species(models.TextChoices):
 class Sex(models.TextChoices):
     FEMALE = "f", _("Female")
     MALE = "m", _("Male")
+
+
+class SocialPlatform(models.TextChoices):
+    INSTAGRAM = "instagram", _("Instagram")
+    TIKTOK = "tiktok", _("TikTok")
+    YOUTUBE = "youtube", _("YouTube")
 
 
 class Pet(UUIDMixin, DateTimeMixin):
@@ -30,6 +48,7 @@ class Pet(UUIDMixin, DateTimeMixin):
     location = models.CharField(_("Location"), max_length=100, blank=True, null=True)
     is_vaccinated = models.BooleanField(_("Vaccinated"), default=False)
 
+    short_description = models.TextField(_("Short Description"), blank=True, null=True)
     description = models.TextField(_("Description"), blank=True, null=True)
     health = models.TextField(_("Health"), blank=True, null=True)
     profile_picture = models.ImageField(
@@ -47,8 +66,33 @@ class Pet(UUIDMixin, DateTimeMixin):
         verbose_name=_("Owner"),
     )
 
+    tags = TaggableManager(through=UUIDTaggedItem)
+
     def __str__(self):
         return f"{self.name} ({self.get_species_display()})"
+
+
+class PetSocialLink(UUIDMixin, DateTimeMixin):
+    """
+    Model to store pet-specific social media links.
+    One pet can have multiple social links for various platforms.
+    """
+
+    pet = models.ForeignKey(
+        Pet,
+        on_delete=models.CASCADE,
+        related_name="social_links",
+        verbose_name=_("Pet"),
+    )
+    platform = models.CharField(
+        _("Platform"),
+        max_length=20,
+        choices=SocialPlatform.choices,
+    )
+    url = models.URLField(_("URL"), max_length=500)
+
+    def __str__(self):
+        return f"{self.pet.name} - {self.get_platform_display()}"
 
 
 class ListingStatus(models.TextChoices):

@@ -15,6 +15,8 @@ User = get_user_model()
 
 router = Router(tags=["auth"])
 
+# TODO: Add custom reset password, confirm reset password and change password endpoints (based on allauth)
+
 
 @router.get("/csrf", response={200: BaseResponse})
 def get_csrf_token(request):
@@ -46,7 +48,7 @@ def login_user(request, data: UserLogin):
 
         login(request, user)
         return {"message": "Logged in"}
-    return 401, {"message": _("Invalid сredentials")}
+    return 401, {"message": _("Invalid сredentials. Please try again.")}
 
 
 @router.post("/logout", response={200: BaseResponse})
