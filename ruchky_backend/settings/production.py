@@ -10,7 +10,9 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 INSTALLED_APPS += ("django_cleanup.apps.CleanupConfig",)  # noqa
 
-# DEFAULT_FILE_STORAGE = "portal.helpers.storages.MediaRootGoogleCloudStorage"
+GS_BUCKET_NAME = os.getenv("GS_BUCKET_NAME", "naruchky")  # noqa
+
+DEFAULT_FILE_STORAGE = "ruchky_backend.helpers.storage.StorageProvider"
 
 # EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 # EMAIL_HOST = os.getenv("EMAIL_HOST")  # noqa
