@@ -7,7 +7,7 @@ uv run manage.py migrate
 uv run manage.py collectstatic --noinput
 
 # compile messages for translation
-uv run manage.py compilemessages
+uv run manage.py compilemessages -l uk
 
 # Check environment variable
 if [ "$ENVIRONMENT" = "development" ]; then

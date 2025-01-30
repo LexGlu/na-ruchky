@@ -1,4 +1,4 @@
-FROM python:3.11-slim-bookworm
+FROM python:3.13-slim-bookworm
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
@@ -11,6 +11,9 @@ ADD https://astral.sh/uv/install.sh /uv-installer.sh
 
 # Install gettext
 RUN apt-get install -y gettext
+
+# Install libpq5
+RUN apt-get install -y libpq5
 
 # Run the installer then remove it
 RUN sh /uv-installer.sh && rm /uv-installer.sh

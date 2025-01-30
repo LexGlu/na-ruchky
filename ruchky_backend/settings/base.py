@@ -218,9 +218,9 @@ ACCOUNT_CHANGE_EMAIL = True
 ACCOUNT_EMAIL_NOTIFICATIONS = True
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = os.environ.get(  # noqa
+CORS_ALLOWED_ORIGINS = os.getenv(  # noqa
     "CORS_ALLOWED_ORIGINS", "http://127.0.0.1:3000,http://localhost:3000"
 ).split(",")
-CSRF_TRUSTED_ORIGINS = os.environ.get(  # noqa
+CSRF_TRUSTED_ORIGINS = os.getenv(  # noqa
     "CSRF_TRUSTED_ORIGINS", "http://127.0.0.1:3000,http://localhost:3000"
 ).split(",")
