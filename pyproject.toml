@@ -14,12 +14,14 @@ dependencies = [
     "django-taggit>=6.1.0",
     "email-validator>=2.2.0",
     "google-cloud-storage>=2.19.0",
+    "gunicorn>=23.0.0",
     "phonenumbers>=8.13.53",
     "pillow>=11.1.0",
     "psycopg[binary,pool]>=3.2.3",
     "pydantic>=2.10.4",
     "pydantic-extra-types>=2.10.2",
     "python-dotenv>=1.0.1",
+    "uvicorn>=0.34.0",
     "whitenoise>=6.8.2",
 ]
 

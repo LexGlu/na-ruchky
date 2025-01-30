@@ -1,0 +1,23 @@
+services:
+  db-test:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  backend-test:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db-test
+    env_file:
+      - .env
+
+volumes:
+  pg_data:
