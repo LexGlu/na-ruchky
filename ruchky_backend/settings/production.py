@@ -28,3 +28,4 @@ EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")  # noqa
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")  # noqa
 EMAIL_PORT = os.getenv("EMAIL_PORT", 587)  # noqa
 EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")  # noqa
