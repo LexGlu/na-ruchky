@@ -169,6 +169,9 @@ MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
 
 STORAGES = {
+    "default": {
+        "BACKEND": "ruchky_backend.helpers.storage.StorageProvider",
+    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
@@ -213,7 +216,7 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = os.getenv(
 )
 
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
-ACCOUNT_EMAIL_SUBJECT_PREFIX = "Na Ruchky | "
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "Na.Ruchky | "
 ACCOUNT_CHANGE_EMAIL = True
 ACCOUNT_EMAIL_NOTIFICATIONS = True
 
