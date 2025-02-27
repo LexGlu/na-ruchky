@@ -80,7 +80,13 @@ def list_pet_listings(
     organization_id: Optional[UUID] = None,
     organization_name: Optional[str] = None,
     is_charity: Optional[bool] = None,
+    sort: Optional[str] = None,
 ):
+    """
+    List pet listings with filtering and sorting options.
+
+    Returns paginated list of pet listings based on provided filters.
+    """
     filters = {}
 
     if status is not None:
@@ -94,11 +100,11 @@ def list_pet_listings(
     if sex is not None:
         filters["pet__sex"] = sex
     if name:
-        filters["pet__name__icontains"] = name
+        filters["pet__name__icontains"] = name.strip()
     if breed:
-        filters["pet__breed__icontains"] = breed
+        filters["pet__breed__icontains"] = breed.strip()
     if location:
-        filters["pet__location__icontains"] = location
+        filters["pet__location__icontains"] = location.strip()
     if is_vaccinated is not None:
         filters["pet__is_vaccinated"] = is_vaccinated
     if owner_id is not None:
@@ -106,17 +112,46 @@ def list_pet_listings(
     if organization_id is not None:
         filters["pet__owner__organization_id"] = organization_id
     if organization_name:
-        filters["pet__owner__organization__name__icontains"] = organization_name
+        filters["pet__owner__organization__name__icontains"] = organization_name.strip()
     if is_charity is not None:
         filters["pet__owner__organization__is_charity"] = is_charity
 
+    # Age filtering
     now_date = timezone.now().date()
     if min_age is not None:
         filters["pet__birth_date__lte"] = now_date - relativedelta(years=min_age)
     if max_age is not None:
         filters["pet__birth_date__gte"] = now_date - relativedelta(years=max_age)
 
-    pet_listings = PetListing.objects.filter(**filters)
+    # Base queryset with select_related for better performance
+    pet_listings = PetListing.objects.select_related(
+        "pet", "pet__owner", "pet__owner__organization"
+    ).filter(**filters)
+
+    allowed_sort_fields = {
+        "price",
+        "created_at",
+        "updated_at",
+        "pet__name",
+        "pet__species",
+        "pet__breed",
+        "pet__birth_date",
+        "pet__owner__organization__name",
+    }
+
+    if sort:
+        sort_direction = ""
+        sort_field = sort
+
+        if sort.startswith("-"):
+            sort_direction = "-"
+            sort_field = sort[1:]
+
+        if sort_field not in allowed_sort_fields:
+            pass
+        else:
+            pet_listings = pet_listings.order_by(f"{sort_direction}{sort_field}")
+
     return pet_listings
 
 
