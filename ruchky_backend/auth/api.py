@@ -1,13 +1,18 @@
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import send_email_confirmation, has_verified_email
+from allauth.socialaccount.models import SocialApp
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.models import SocialLogin
 
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.db import IntegrityError
 from django.middleware.csrf import get_token
 from django.utils.translation import gettext as _
 from ninja import Router
+from ninja.responses import Response
 
-from ruchky_backend.auth.schemas import UserLogin, UserRegister
+
+from ruchky_backend.auth.schemas import UserLogin, UserRegister, TokenSchema
 from ruchky_backend.helpers.api.schemas import BaseResponse
 
 User = get_user_model()
@@ -82,3 +87,55 @@ def register_user(request, data: UserRegister):
         return 500, {"message": str(e)}
 
     return {"message": "success"}
+
+
+@router.post("/google-login")
+def google_login(request, data: TokenSchema):
+    """
+    Authenticate a user using Google OAuth token
+    """
+    provider = "google"
+    token = data.token
+    try:
+        adapter = GoogleOAuth2Adapter(request)
+        app = SocialApp.objects.get(provider=provider)
+        social_login: SocialLogin = adapter.complete_login(
+            request, app, token=token, response={"id_token": token}
+        )
+
+        email = (
+            social_login.email_addresses[0] if social_login.email_addresses else None
+        )
+        if not email:
+            return Response({"message": "Email not provided by Google"}, status=400)
+
+        if not social_login.is_existing:
+            social_login.lookup()
+            user_exists = User.objects.filter(email=email.email).exists()
+            if user_exists:
+                social_account_exists = social_login.user.socialaccount_set.filter(
+                    provider=provider
+                ).exists()
+
+                if not social_account_exists:
+                    print(f"User does not have {provider} account, connecting")
+                    social_login.connect(request, user=social_login.user)
+            else:
+                print("Creating new user since user does not exists.")
+                social_login.save(request)
+
+        user = social_login.account.user
+
+        if not user.is_active:
+            return Response({"message": "Account is disabled"}, status=403)
+
+        login(request, user, backend="django.contrib.auth.backends.ModelBackend")
+
+        return Response("")
+    except SocialApp.DoesNotExist:
+        return Response(
+            {"message": "Google authentication is not configured"}, status=500
+        )
+    except Exception as e:
+        print(f"Google login error: {str(e)}")
+        return Response({"message": "Authentication failed"}, status=401)
