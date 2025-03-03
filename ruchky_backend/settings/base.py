@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     # Third Party Apps
     "allauth",
     "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
     "corsheaders",
     "debug_toolbar",
     "taggit",
@@ -228,3 +230,23 @@ CORS_ALLOWED_ORIGINS = os.getenv(  # noqa
 CSRF_TRUSTED_ORIGINS = os.getenv(  # noqa
     "CSRF_TRUSTED_ORIGINS", "http://127.0.0.1:3000,http://localhost:3000"
 ).split(",")
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+        "OAUTH_PKCE_ENABLED": True,
+    }
+}
+SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
+
+
+LOGIN_REDIRECT_URL = "http://127.0.0.1:3000"
+LOGOUT_REDIRECT_URL = "/"

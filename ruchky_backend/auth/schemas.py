@@ -27,3 +27,7 @@ class UserRegister(Schema):
         except DjangoValidationError as e:
             raise ValueError("; ".join(e.messages))
         return value
+
+
+class TokenSchema(Schema):
+    token: str
