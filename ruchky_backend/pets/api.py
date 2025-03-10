@@ -3,16 +3,30 @@ from uuid import UUID
 
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
-from ninja import Router
+from ninja import Router, File
 from ninja.pagination import paginate
+from ninja.files import UploadedFile
 from django.utils import timezone
 from dateutil.relativedelta import relativedelta
 
-from ruchky_backend.pets.schemas import PetSchema, PetListingSchema
-from ruchky_backend.pets.models import Pet, PetListing, Sex, Species, ListingStatus
+from ruchky_backend.pets.schemas import (
+    PetSchema,
+    PetListingSchema,
+    PetImageSchema,
+    PetImageUpdateSchema,
+)
+from ruchky_backend.pets.models import (
+    Pet,
+    PetListing,
+    PetImage,
+    Sex,
+    Species,
+    ListingStatus,
+)
 
 pets_router = Router(tags=["pets"])
 pet_listings_router = Router(tags=["pet_listings"])
+pet_images_router = Router(tags=["pet_images"])
 
 
 @pets_router.get("", response=List[PetSchema])
@@ -158,3 +172,77 @@ def list_pet_listings(
 @pet_listings_router.get("/{id}", response=PetListingSchema)
 def get_pet_listing(request, id: UUID):
     return get_object_or_404(PetListing, id=id)
+
+
+# Pet Images API endpoints
+@pet_images_router.get("/{pet_id}", response=List[PetImageSchema])
+def list_pet_images(request, pet_id: UUID):
+    """
+    Get all images for a specific pet.
+    """
+    pet = get_object_or_404(Pet, id=pet_id)
+    return pet.images.all()
+
+
+@pet_images_router.post("/{pet_id}", response=PetImageSchema)
+def create_pet_image(
+    request,
+    pet_id: UUID,
+    file: UploadedFile = File(...),
+    order: int = 0,
+    caption: Optional[str] = None,
+):
+    """
+    Upload a new image for a specific pet.
+    """
+    pet = get_object_or_404(Pet, id=pet_id)
+
+    # Create and save the new pet image
+    pet_image = PetImage(pet=pet, image=file, order=order, caption=caption)
+    pet_image.save()
+
+    return pet_image
+
+
+@pet_images_router.patch("/{image_id}", response=PetImageSchema)
+def update_pet_image(request, image_id: UUID, data: PetImageUpdateSchema):
+    """
+    Update an existing pet image (order or caption).
+    """
+    pet_image = get_object_or_404(PetImage, id=image_id)
+
+    if data.order is not None:
+        pet_image.order = data.order
+
+    if data.caption is not None:
+        pet_image.caption = data.caption
+
+    pet_image.save()
+
+    return pet_image
+
+
+@pet_images_router.delete("/{image_id}")
+def delete_pet_image(request, image_id: UUID):
+    """
+    Delete a pet image.
+    """
+    pet_image = get_object_or_404(PetImage, id=image_id)
+    pet_image.delete()
+
+    return {"success": True}
+
+
+@pet_images_router.post("/{pet_id}/set-profile", response=PetSchema)
+def set_profile_picture(request, pet_id: UUID, image_id: UUID):
+    """
+    Set an existing image as the profile picture for the pet.
+    """
+    pet = get_object_or_404(Pet, id=pet_id)
+    pet_image = get_object_or_404(PetImage, id=image_id, pet_id=pet_id)
+
+    # Set the selected image as the profile picture
+    pet.profile_picture = pet_image
+    pet.save()
+
+    return pet

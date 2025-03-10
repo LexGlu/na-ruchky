@@ -51,10 +51,11 @@ class Pet(UUIDMixin, DateTimeMixin):
     short_description = models.TextField(_("Short Description"), blank=True, null=True)
     description = models.TextField(_("Description"), blank=True, null=True)
     health = models.TextField(_("Health"), blank=True, null=True)
-    profile_picture = models.ImageField(
+    profile_picture = models.ForeignKey(
+        "PetImage",
+        on_delete=models.SET_NULL,
+        related_name="profile_for",
         verbose_name=_("Profile Picture"),
-        upload_to=generate_filename,
-        storage=storage,
         blank=True,
         null=True,
     )
@@ -70,6 +71,38 @@ class Pet(UUIDMixin, DateTimeMixin):
 
     def __str__(self):
         return f"{self.name} ({self.get_species_display()})"
+
+
+class PetImage(UUIDMixin, DateTimeMixin):
+    """
+    Model to store additional images for a pet.
+    """
+
+    pet = models.ForeignKey(
+        Pet,
+        on_delete=models.CASCADE,
+        related_name="images",
+        verbose_name=_("Pet"),
+    )
+    image = models.ImageField(
+        verbose_name=_("Image"),
+        upload_to=generate_filename,
+        storage=storage,
+    )
+    order = models.PositiveIntegerField(
+        default=0,
+        verbose_name=_("Display Order"),
+        help_text=_("Order in which the image appears in the gallery"),
+    )
+    caption = models.CharField(_("Caption"), max_length=100, blank=True, null=True)
+
+    class Meta:
+        ordering = ["order"]
+        verbose_name = _("Pet Image")
+        verbose_name_plural = _("Pet Images")
+
+    def __str__(self):
+        return f"{self.pet.name} - Image {self.order}"
 
 
 class PetSocialLink(UUIDMixin, DateTimeMixin):

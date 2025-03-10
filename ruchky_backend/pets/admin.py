@@ -2,7 +2,28 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
-from ruchky_backend.pets.models import Pet, PetListing
+from ruchky_backend.pets.models import Pet, PetListing, PetImage
+
+
+class PetImageInline(admin.TabularInline):
+    """
+    Inline admin for pet images.
+    """
+
+    model = PetImage
+    extra = 1
+    fields = ("image", "order", "caption", "image_preview")
+    readonly_fields = ("image_preview",)
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="max-height: 100px; max-width: 100px;" />',
+                obj.image.url,
+            )
+        return "-"
+
+    image_preview.short_description = _("Preview")
 
 
 @admin.register(Pet)
@@ -22,11 +43,12 @@ class PetAdmin(admin.ModelAdmin):
     list_filter = ("species", "created_at")
     search_fields = ("id", "name", "breed", "owner__email")
 
-    readonly_fields = ("id",)
+    readonly_fields = ("id", "image_tag_large")
+    inlines = [PetImageInline]
 
     def image_tag(self, obj):
         content = (
-            f'<img src="{obj.profile_picture.url}" style="max-height: 35px; width: 35px; border-radius: 50%;" />'
+            f'<img src="{obj.profile_picture.image.url}" style="max-height: 35px; width: 35px; border-radius: 50%;" />'
             if obj.profile_picture
             else "-"
         )
@@ -36,6 +58,37 @@ class PetAdmin(admin.ModelAdmin):
         )
 
     image_tag.short_description = _("Profile Picture")
+
+    def image_tag_large(self, obj):
+        if obj.profile_picture:
+            return format_html(
+                '<img src="{}" style="max-height: 200px; max-width: 200px;" />',
+                obj.profile_picture.image.url,
+            )
+        return "-"
+
+    image_tag_large.short_description = _("Profile Picture Preview")
+
+
+@admin.register(PetImage)
+class PetImageAdmin(admin.ModelAdmin):
+    """
+    Admin for managing pet images.
+    """
+
+    list_display = ("pet", "order", "image_preview", "created_at")
+    list_filter = ("pet__species", "created_at")
+    search_fields = ("pet__name", "pet__breed", "caption")
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="max-height: 50px; max-width: 50px;" />',
+                obj.image.url,
+            )
+        return "-"
+
+    image_preview.short_description = _("Preview")
 
 
 @admin.register(PetListing)
