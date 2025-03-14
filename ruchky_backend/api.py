@@ -3,7 +3,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 from ruchky_backend.auth.api import router as auth_router
 from ruchky_backend.users.api import router as users_router
-from ruchky_backend.pets.api import pets_router, pet_listings_router
+from ruchky_backend.pets.api import pets_router, pet_listings_router, breeds_router
 
 
 api = NinjaAPI(
@@ -16,5 +16,6 @@ api = NinjaAPI(
 
 api.add_router("/auth/", auth_router)
 api.add_router("/users/", users_router)
+api.add_router("/breeds/", breeds_router)
 api.add_router("/pets/", pets_router)
 api.add_router("/pet-listings/", pet_listings_router)

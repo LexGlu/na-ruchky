@@ -3,10 +3,11 @@ from uuid import UUID
 
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
-from ninja import Router, File
+from ninja import Router, File, Query
 from ninja.pagination import paginate
 from ninja.files import UploadedFile
 from django.utils import timezone
+from django.db.models import Q
 from dateutil.relativedelta import relativedelta
 
 from ruchky_backend.pets.schemas import (
@@ -14,6 +15,8 @@ from ruchky_backend.pets.schemas import (
     PetListingSchema,
     PetImageSchema,
     PetImageUpdateSchema,
+    BreedSchema,
+    BreedFilterParams,
 )
 from ruchky_backend.pets.models import (
     Pet,
@@ -22,8 +25,10 @@ from ruchky_backend.pets.models import (
     Sex,
     Species,
     ListingStatus,
+    Breed,
 )
 
+breeds_router = Router(tags=["breeds"])
 pets_router = Router(tags=["pets"])
 pet_listings_router = Router(tags=["pet_listings"])
 pet_images_router = Router(tags=["pet_images"])
@@ -246,3 +251,162 @@ def set_profile_picture(request, pet_id: UUID, image_id: UUID):
     pet.save()
 
     return pet
+
+
+breeds_router = Router()
+
+
+@breeds_router.get("", response=List[BreedSchema])
+@paginate
+def list_breeds(
+    request: HttpRequest,
+    params: BreedFilterParams = Query(
+        ...
+    ),  # Use Query(...) instead of function parameter
+):
+    """
+    List breeds with optional filtering.
+
+    Parameters:
+    - species: Filter by species (dog/cat)
+    - search: Search by name or description
+    - origin: Filter by country of origin
+    - min_life_span: Filter by minimum life span (in years)
+    - max_life_span: Filter by maximum life span (in years)
+    - weight_range: Filter by weight range (format: "min-max" in kg)
+    """
+    breeds = Breed.objects.filter(is_active=True)
+
+    if params.species:
+        breeds = breeds.filter(species=params.species)
+
+    if params.search:
+        search_query = params.search.strip()
+        # Use | operator to create an OR condition between name and description
+        breeds = breeds.filter(
+            Q(name__icontains=search_query) | Q(description__icontains=search_query)
+        )
+
+    if params.origin:
+        breeds = breeds.filter(origin__icontains=params.origin)
+
+    # Handle life span filtering more intelligently
+    if params.min_life_span or params.max_life_span:
+        query = Q()
+
+        if params.min_life_span:
+            try:
+                min_years = int(params.min_life_span)
+                # Match patterns like "10-15 years", "10 years", "10 to 15 years"
+                # Match cases where the min value is at the start: "10-15", "10 to 15", "10 years"
+                query |= Q(life_span__regex=r"^(\s*){}-".format(min_years))
+                query |= Q(life_span__regex=r"^(\s*){}(\s+)to".format(min_years))
+                query |= Q(life_span__regex=r"^(\s*){}(\s+)years".format(min_years))
+
+                # Also match ranges where min_years is between the range values
+                for i in range(1, min_years):
+                    query |= Q(life_span__regex=r"^(\s*){}(\s*)-(\s*)(\d+)".format(i))
+                    query |= Q(life_span__regex=r"^(\s*){}(\s+)to(\s+)(\d+)".format(i))
+            except ValueError:
+                # Invalid min_life_span value, ignore this filter
+                pass
+
+        max_query = Q()
+        if params.max_life_span:
+            try:
+                max_years = int(params.max_life_span)
+                # Match for maximum values in ranges like "10-15", "15 years", "10 to 15"
+
+                # Match cases where max value is at the end of a range: "10-15", "10 to 15"
+                max_query |= Q(
+                    life_span__regex=r"-(\s*){}(\s*)(years)?$".format(max_years)
+                )
+                max_query |= Q(
+                    life_span__regex=r"to(\s*){}(\s*)(years)?$".format(max_years)
+                )
+                max_query |= Q(life_span__regex=r"^(\s*){}(\s+)years".format(max_years))
+
+                # Also match ranges where all values are below max_years
+                exclude_query = Q()
+                for i in range(max_years + 1, 30):  # 30 as a reasonable upper bound
+                    exclude_query |= Q(life_span__regex=r"-(\s*){}(\s*)".format(i))
+                    exclude_query |= Q(life_span__regex=r"to(\s*){}(\s*)".format(i))
+                    exclude_query |= Q(life_span__regex=r"^(\s*){}(\s+)years".format(i))
+
+                # If we have exclusions, add them to the query
+                if exclude_query:
+                    max_query |= ~exclude_query
+
+            except ValueError:
+                # Invalid max_life_span value, ignore this filter
+                pass
+
+        # Combine min and max queries appropriately
+        if query and max_query:
+            # Both min and max specified - need both conditions
+            final_query = query & max_query
+            breeds = breeds.filter(final_query)
+        elif query:
+            # Only min specified
+            breeds = breeds.filter(query)
+        elif max_query:
+            # Only max specified
+            breeds = breeds.filter(max_query)
+
+    # Handle weight filtering with better pattern matching
+    if params.weight_range:
+        try:
+            # Parse weight range into components
+            if "-" in params.weight_range:
+                min_weight, max_weight = params.weight_range.split("-", 1)
+                weight_query = Q()
+
+                # Try to match numeric patterns in the weight field
+                if min_weight.strip() and max_weight.strip():
+                    # Both min and max provided
+                    min_w = float(min_weight.strip())
+                    max_w = float(max_weight.strip())
+
+                    # Match weight strings that could represent this range
+                    # e.g., "5-10 kg", "5 to 10 kg", etc.
+                    weight_query |= Q(weight__regex=r"{}.*{}".format(min_w, max_w))
+
+                    # Also match weights that fall within our range
+                    for i in range(int(min_w), int(max_w) + 1):
+                        weight_query |= Q(weight__regex=r"^(\s*){}(\s*)".format(i))
+                        weight_query |= Q(weight__regex=r"-(\s*){}(\s*)".format(i))
+                        weight_query |= Q(weight__regex=r"to(\s*){}(\s*)".format(i))
+
+                    breeds = breeds.filter(weight_query)
+                elif min_weight.strip():
+                    # Only min provided
+                    min_w = float(min_weight.strip())
+                    breeds = breeds.filter(
+                        Q(weight__regex=r"{}".format(min_w))
+                        | Q(weight__regex=r"^(\s*){}(\s*)".format(min_w))
+                    )
+                elif max_weight.strip():
+                    # Only max provided
+                    max_w = float(max_weight.strip())
+                    breeds = breeds.filter(
+                        Q(weight__regex=r"{}".format(max_w))
+                        | Q(weight__regex=r"-(\s*){}(\s*)".format(max_w))
+                        | Q(weight__regex=r"to(\s*){}(\s*)".format(max_w))
+                    )
+            else:
+                # Single weight value - match any occurrence
+                weight_val = float(params.weight_range.strip())
+                breeds = breeds.filter(weight__icontains=str(weight_val))
+        except (ValueError, TypeError):
+            # Invalid weight format, ignore this filter
+            pass
+
+    return breeds.order_by("species", "name")
+
+
+@breeds_router.get("/{id}", response=BreedSchema)
+def get_breed(request: HttpRequest, id: UUID):
+    """
+    Get detailed information about a specific breed.
+    """
+    return get_object_or_404(Breed, id=id, is_active=True)

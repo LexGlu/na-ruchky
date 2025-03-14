@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
-from ruchky_backend.pets.models import Pet, PetListing, PetImage
+from ruchky_backend.pets.models import Breed, Pet, PetListing, PetImage, PetSocialLink
 
 
 class PetImageInline(admin.TabularInline):
@@ -26,6 +26,61 @@ class PetImageInline(admin.TabularInline):
     image_preview.short_description = _("Preview")
 
 
+class PetSocialLinkInline(admin.TabularInline):
+    """
+    Inline admin for pet social links.
+    """
+
+    model = PetSocialLink
+    extra = 1
+    fields = ("platform", "url")
+
+
+@admin.register(Breed)
+class BreedAdmin(admin.ModelAdmin):
+    """
+    Admin for managing breeds.
+    """
+
+    list_display = (
+        "name",
+        "species",
+        "origin",
+        "life_span",
+        "weight",
+        "is_active",
+        "image_preview",
+    )
+    list_filter = ("species", "is_active", "origin")
+    search_fields = ("name", "description", "origin", "life_span", "weight")
+    fieldsets = (
+        (None, {"fields": ("name", "species", "description", "origin", "is_active")}),
+        (_("Physical Attributes"), {"fields": ("life_span", "weight")}),
+        (_("Image"), {"fields": ("image", "image_preview_large")}),
+    )
+    readonly_fields = ("image_preview_large",)
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="max-height: 50px; max-width: 50px;" />',
+                obj.image.url,
+            )
+        return "-"
+
+    image_preview.short_description = _("Preview")
+
+    def image_preview_large(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="max-height: 200px; max-width: 200px;" />',
+                obj.image.url,
+            )
+        return "-"
+
+    image_preview_large.short_description = _("Image Preview")
+
+
 @admin.register(Pet)
 class PetAdmin(admin.ModelAdmin):
     """
@@ -35,16 +90,54 @@ class PetAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         "species",
-        "breed",
+        "breed_display",
         "owner",
         "created_at",
         "image_tag",
     )
-    list_filter = ("species", "created_at")
-    search_fields = ("id", "name", "breed", "owner__email")
+    list_filter = ("species", "breed", "created_at", "is_vaccinated")
+    search_fields = ("id", "name", "breed__name", "owner__email")
 
     readonly_fields = ("id", "image_tag_large")
-    inlines = [PetImageInline]
+    inlines = [PetImageInline, PetSocialLinkInline]
+    autocomplete_fields = ["breed"]
+
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "name",
+                    "species",
+                    "breed",
+                    "sex",
+                    "birth_date",
+                    "location",
+                )
+            },
+        ),
+        (
+            _("Ownership & Description"),
+            {
+                "fields": (
+                    "owner",
+                    "short_description",
+                    "description",
+                    "health",
+                    "is_vaccinated",
+                )
+            },
+        ),
+        (_("Profile Picture"), {"fields": ("profile_picture", "image_tag_large")}),
+    )
+
+    def breed_display(self, obj):
+        """Display breed name from either the breed model or custom field"""
+        if obj.breed:
+            return obj.breed.name
+        return "-"
+
+    breed_display.short_description = _("Breed")
 
     def image_tag(self, obj):
         content = (

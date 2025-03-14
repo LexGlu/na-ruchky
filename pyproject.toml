@@ -5,6 +5,7 @@ description = "Na Ruchky Django Ninja backend and Django Admin panel"
 readme = "README.md"
 requires-python = ">=3.13.1"
 dependencies = [
+    "aiohttp>=3.11.13",
     "django>=5.1.6",
     "django-allauth[socialaccount]>=65.3.1",
     "django-cleanup>=9.0.0",

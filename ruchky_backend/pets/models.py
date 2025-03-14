@@ -34,6 +34,56 @@ class SocialPlatform(models.TextChoices):
     YOUTUBE = "youtube", _("YouTube")
 
 
+class Breed(UUIDMixin, DateTimeMixin):
+    """
+    Designed to be extended with additional fields in the future.
+    """
+
+    name = models.CharField(_("Name"), max_length=100)
+    species = models.CharField(_("Species"), max_length=20, choices=Species.choices)
+    description = models.TextField(_("Description"), blank=True, null=True)
+    life_span = models.CharField(
+        _("Life Span"),
+        max_length=50,
+        blank=True,
+        null=True,
+        help_text=_("Average life span of the breed"),
+    )
+    weight = models.CharField(
+        _("Weight"),
+        max_length=50,
+        blank=True,
+        null=True,
+        help_text=_("Average weight of the breed"),
+    )
+
+    origin = models.CharField(_("Origin"), max_length=100, blank=True, null=True)
+
+    image = models.ImageField(
+        verbose_name=_("Breed Image"),
+        upload_to=generate_filename,
+        storage=storage,
+        blank=True,
+        null=True,
+        help_text=_("Representative image of the breed"),
+    )
+
+    is_active = models.BooleanField(_("Active"), default=True)
+
+    class Meta:
+        verbose_name = _("Breed")
+        verbose_name_plural = _("Breeds")
+        ordering = ["species", "name"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["name", "species"], name="unique_breed_per_species"
+            )
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.name} ({self.get_species_display()})"
+
+
 class Pet(UUIDMixin, DateTimeMixin):
     """
     The core pet model: includes ownership by a User (which could be
@@ -42,7 +92,16 @@ class Pet(UUIDMixin, DateTimeMixin):
 
     name = models.CharField(_("Name"), max_length=100)
     species = models.CharField(_("Species"), max_length=20, choices=Species.choices)
-    breed = models.CharField(_("Breed"), max_length=100, blank=True, null=True)
+
+    breed = models.ForeignKey(
+        Breed,
+        on_delete=models.SET_NULL,
+        related_name="pets",
+        verbose_name=_("Breed"),
+        blank=True,
+        null=True,
+    )
+
     sex = models.CharField(_("Sex"), max_length=1, choices=Sex.choices)
     birth_date = models.DateField(_("Birth Date"))
     location = models.CharField(_("Location"), max_length=100, blank=True, null=True)
@@ -69,8 +128,19 @@ class Pet(UUIDMixin, DateTimeMixin):
 
     tags = TaggableManager(through=UUIDTaggedItem)
 
-    def __str__(self):
-        return f"{self.name} ({self.get_species_display()})"
+    def __str__(self) -> str:
+        """Returns a formatted string representation of the pet."""
+        base = f"{self.name} ({self.get_species_display()}"
+        breed_name = self.get_breed_name()
+
+        if breed_name:
+            return f"{base}, {breed_name})"
+
+        return f"{base})"
+
+    def get_breed_name(self) -> str:
+        """Returns the breed name, either from the related model or custom field"""
+        return self.breed.name if self.breed else None
 
 
 class PetImage(UUIDMixin, DateTimeMixin):
