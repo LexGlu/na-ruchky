@@ -145,7 +145,7 @@ uk_formats.DATE_FORMAT = "d E Y"  # "12 липня 2024"
 
 LOCALE_PATHS = [BASE_DIR / "locale"]
 
-LANGUAGE_CODE = os.getenv("LANGUAGE_CODE", "en")
+LANGUAGE_CODE = os.getenv("LANGUAGE_CODE", "uk")
 
 TIME_ZONE = os.getenv("TIME_ZONE", "Europe/Kyiv")
 

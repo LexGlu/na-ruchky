@@ -1,0 +1,1053 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-17 15:43+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
+"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
+"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
+"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+#: ruchky_backend/auth/api.py:51
+msgid "We have sent you an email to verify your email address."
+msgstr "Ми відправили вам електронний лист для підтвердження вашої електронної адреси."
+
+#: ruchky_backend/auth/api.py:56
+msgid "Invalid сredentials. Please try again."
+msgstr "Невірні дані. Будь ласка, спробуйте ще раз."
+
+#: ruchky_backend/helpers/db/models.py:53
+msgid "Created At"
+msgstr "Створено"
+
+#: ruchky_backend/helpers/db/models.py:54
+msgid "Updated At"
+msgstr "Оновлено"
+
+#: ruchky_backend/helpers/db/validators.py:8
+msgid ""
+"Phone number must be entered in the format: '+999999999'. Up to 15 digits "
+"allowed."
+msgstr ""
+"Номер телефону повинен бути введений у форматі: '+999999999'. Дозволено до 15 "
+"цифр."
+
+#: ruchky_backend/pets/admin.py:26 ruchky_backend/pets/admin.py:71
+#: ruchky_backend/pets/admin.py:184
+msgid "Preview"
+msgstr "Перегляд"
+
+#: ruchky_backend/pets/admin.py:58
+msgid "Physical Attributes"
+msgstr "Фізичні атрибути"
+
+#: ruchky_backend/pets/admin.py:59 ruchky_backend/pets/models.py:158
+msgid "Image"
+msgstr "Зображення"
+
+#: ruchky_backend/pets/admin.py:81
+msgid "Image Preview"
+msgstr "Перегляд зображення"
+
+#: ruchky_backend/pets/admin.py:120
+msgid "Ownership & Description"
+msgstr "Власність та опис"
+
+#: ruchky_backend/pets/admin.py:131 ruchky_backend/pets/admin.py:153
+#: ruchky_backend/pets/models.py:117
+msgid "Profile Picture"
+msgstr "Фото профілю"
+
+#: ruchky_backend/pets/admin.py:140 ruchky_backend/pets/models.py:74
+#: ruchky_backend/pets/models.py:100
+msgid "Breed"
+msgstr "Порода"
+
+#: ruchky_backend/pets/admin.py:163
+msgid "Profile Picture Preview"
+msgstr "Перегляд фото профілю"
+
+#: ruchky_backend/pets/models.py:17
+msgid "Tag"
+msgstr "Тег"
+
+#: ruchky_backend/pets/models.py:18
+msgid "Tags"
+msgstr "Теги"
+
+#: ruchky_backend/pets/models.py:22
+msgid "Dog"
+msgstr "Собака"
+
+#: ruchky_backend/pets/models.py:23
+msgid "Cat"
+msgstr "Кіт"
+
+#: ruchky_backend/pets/models.py:27
+msgid "Female"
+msgstr "Жінка"
+
+#: ruchky_backend/pets/models.py:28
+msgid "Male"
+msgstr "Чоловік"
+
+#: ruchky_backend/pets/models.py:32
+msgid "Instagram"
+msgstr "Instagram"
+
+#: ruchky_backend/pets/models.py:33
+msgid "TikTok"
+msgstr "TikTok"
+
+#: ruchky_backend/pets/models.py:34
+msgid "YouTube"
+msgstr "YouTube"
+
+#: ruchky_backend/pets/models.py:42 ruchky_backend/pets/models.py:93
+msgid "Name"
+msgstr "Ім'я"
+
+#: ruchky_backend/pets/models.py:43 ruchky_backend/pets/models.py:94
+msgid "Species"
+msgstr "Вид"
+
+#: ruchky_backend/pets/models.py:44 ruchky_backend/pets/models.py:111
+msgid "Description"
+msgstr "Опис"
+
+#: ruchky_backend/pets/models.py:46
+msgid "Life Span"
+msgstr "Тривалість життя"
+
+#: ruchky_backend/pets/models.py:50
+msgid "Average life span of the breed"
+msgstr "Середня тривалість життя породи"
+
+#: ruchky_backend/pets/models.py:53
+msgid "Weight"
+msgstr "Вага"
+
+#: ruchky_backend/pets/models.py:57
+msgid "Average weight of the breed"
+msgstr "Середня вага породи"
+
+#: ruchky_backend/pets/models.py:60
+msgid "Origin"
+msgstr "Походження"
+
+#: ruchky_backend/pets/models.py:63
+msgid "Breed Image"
+msgstr "Зображення породи"
+
+#: ruchky_backend/pets/models.py:68
+msgid "Representative image of the breed"
+msgstr "Представницьке зображення породи"
+
+#: ruchky_backend/pets/models.py:71 ruchky_backend/pets/models.py:202
+msgid "Active"
+msgstr "Активний"
+
+#: ruchky_backend/pets/models.py:75
+msgid "Breeds"
+msgstr "Породи"
+
+#: ruchky_backend/pets/models.py:105
+msgid "Sex"
+msgstr "Стать"
+
+#: ruchky_backend/pets/models.py:106
+msgid "Birth Date"
+msgstr "Дата народження"
+
+#: ruchky_backend/pets/models.py:107
+msgid "Location"
+msgstr "Місцезнаходження"
+
+#: ruchky_backend/pets/models.py:108
+msgid "Vaccinated"
+msgstr "Вакцинований"
+
+#: ruchky_backend/pets/models.py:110
+msgid "Short Description"
+msgstr "Короткий опис"
+
+#: ruchky_backend/pets/models.py:112
+msgid "Health"
+msgstr "Здоров'я"
+
+#: ruchky_backend/pets/models.py:126
+msgid "Owner"
+msgstr "Власник"
+
+#: ruchky_backend/pets/models.py:155 ruchky_backend/pets/models.py:188
+#: ruchky_backend/pets/models.py:218
+msgid "Pet"
+msgstr "Домашня тварина"
+
+#: ruchky_backend/pets/models.py:164
+msgid "Display Order"
+msgstr "Порядок відображення"
+
+#: ruchky_backend/pets/models.py:165
+msgid "Order in which the image appears in the gallery"
+msgstr "Порядок, в якому зображення з'являється в галереї"
+
+#: ruchky_backend/pets/models.py:167
+msgid "Caption"
+msgstr "Заголовок"
+
+#: ruchky_backend/pets/models.py:171
+msgid "Pet Image"
+msgstr "Зображення домашньої тварини"
+
+#: ruchky_backend/pets/models.py:172
+msgid "Pet Images"
+msgstr "Зображення домашніх тварин"
+
+#: ruchky_backend/pets/models.py:191
+msgid "Platform"
+msgstr "Платформа"
+
+#: ruchky_backend/pets/models.py:195
+msgid "URL"
+msgstr "URL"
+
+#: ruchky_backend/pets/models.py:203
+msgid "Sold"
+msgstr "Продано"
+
+#: ruchky_backend/pets/models.py:204
+msgid "Adopted"
+msgstr "Прийнято"
+
+#: ruchky_backend/pets/models.py:205
+msgid "Expired"
+msgstr "Прострочено"
+
+#: ruchky_backend/pets/models.py:206
+msgid "Archived"
+msgstr "В архіві"
+
+#: ruchky_backend/pets/models.py:220
+msgid "Title"
+msgstr "Назва"
+
+#: ruchky_backend/pets/models.py:222
+msgid "Listing Status"
+msgstr "Статус оголошення"
+
+#: ruchky_backend/pets/models.py:228
+msgid "Price"
+msgstr "Ціна"
+
+#: ruchky_backend/pets/models.py:233
+msgid "Set 0 or leave blank for free/adoption."
+msgstr "Встановіть 0 або залиште поле пустим для безкоштовного прийняття."
+
+#: ruchky_backend/templates/account/email/base_message.txt:1
+msgid "Hello from Na.Ruchky!"
+msgstr "Привіт від Na.Ruchky!"
+
+#: ruchky_backend/templates/account/email/base_message.txt:5
+msgid "Thank you for using Na.Ruchky!"
+msgstr "Дякуємо за використання Na.Ruchky!"
+
+#: ruchky_backend/templates/account/email/base_message.txt:6
+#, python-format
+msgid "%(site_domain)s"
+msgstr "%(site_domain)s"
+
+#: ruchky_backend/templates/account/email/email_confirmation_message.txt:5
+#, python-format
+msgid ""
+"You're receiving this email because the address %(user_display)s was used to "
+"create an account on %(site_domain)s.\n"
+"\n"
+"To confirm this is correct, go to %(activate_url)s"
+msgstr ""
+"Ви отримали цей електронний лист, тому що адресу %(user_display)s було "
+"використано для створення облікового запису на %(site_domain)s.\n"
+"\n"
+"Щоб підтвердити, що це правильно, перейдіть за посиланням %(activate_url)s"
+
+#: ruchky_backend/users/admin.py:39
+msgid "Personal info"
+msgstr "Особиста інформація"
+
+#: ruchky_backend/users/admin.py:48 ruchky_backend/users/models.py:55
+msgid "Organization"
+msgstr "Організація"
+
+#: ruchky_backend/users/admin.py:50
+msgid "Permissions"
+msgstr "Дозволи"
+
+#: ruchky_backend/users/admin.py:61
+msgid "Important dates"
+msgstr "Важливі дати"
+
+#: ruchky_backend/users/forms.py:14 ruchky_backend/users/forms.py:17
+#: ruchky_backend/users/forms.py:43 ruchky_backend/users/forms.py:76
+#: ruchky_backend/users/forms.py:79
+msgid "E-mail address"
+msgstr "Електронна адреса"
+
+#: ruchky_backend/users/forms.py:23 ruchky_backend/users/forms.py:26
+#: ruchky_backend/users/forms.py:57 ruchky_backend/users/forms.py:85
+msgid "Password"
+msgstr "Пароль"
+
+#: ruchky_backend/users/forms.py:31
+msgid "Remember me"
+msgstr "Запам'ятати мене"
+
+#: ruchky_backend/users/forms.py:47
+msgid "Enter your e-mail address"
+msgstr "Введіть свою електронну адресу"
+
+#: ruchky_backend/users/forms.py:60 ruchky_backend/users/forms.py:88
+msgid "Enter your password"
+msgstr "Введіть свій пароль"
+
+#: ruchky_backend/users/forms.py:64 ruchky_backend/users/forms.py:96
+msgid "Confirm password"
+msgstr "Підтвердіть пароль"
+
+#: ruchky_backend/users/forms.py:67 ruchky_backend/users/forms.py:99
+msgid "Confirm your password"
+msgstr "Підтвердіть свій пароль"
+
+#: ruchky_backend/users/models.py:17
+msgid "Organization Name"
+msgstr "Назва організації"
+
+#: ruchky_backend/users/models.py:18
+msgid "Address"
+msgstr "Адреса"
+
+#: ruchky_backend/users/models.py:19
+msgid "Is Charity"
+msgstr "Благодійна організація"
+
+#: ruchky_backend/users/models.py:22
+msgid "Organization Logo"
+msgstr "Логотип організації"
+
+#: ruchky_backend/users/models.py:34
+msgid "Email address"
+msgstr "Електронна адреса"
+
+#: ruchky_backend/users/models.py:38
+msgid "First name"
+msgstr "Ім'я"
+
+#: ruchky_backend/users/models.py:40
+msgid "Last name"
+msgstr "Прізвище"
+
+#: ruchky_backend/users/models.py:42
+msgid "Phone number"
+msgstr "Номер телефону"
+
+
+# Pet breeds translations
+
+msgid "Chesapeake Bay Retriever"
+msgstr "Чесапік бей ретрівер"
+
+msgid "Afghan Hound"
+msgstr "Афганський хорт"
+
+msgid "Sphynx"
+msgstr "Сфінкс"
+
+msgid "Chinese Crested"
+msgstr "Китайська чубата"
+
+msgid "Vizsla"
+msgstr "Угорська лягава"
+
+msgid "LaPerm"
+msgstr "ЛаПерм"
+
+msgid "Belgian Tervuren"
+msgstr "Бельгійська вівчарка тервюрен"
+
+msgid "Bedlington Terrier"
+msgstr "Бедлінгтон-тер'єр"
+
+msgid "Brittany"
+msgstr "Бретонський епаньоль"
+
+msgid "German Pinscher"
+msgstr "Німецький пінчер"
+
+msgid "Komondor"
+msgstr "Комондор"
+
+msgid "Kooikerhondje"
+msgstr "Койкерхондьє"
+
+msgid "Shetland Sheepdog"
+msgstr "Шетландська вівчарка"
+
+msgid "Somali"
+msgstr "Сомалі"
+
+msgid "Airedale Terrier"
+msgstr "Ердельтер'єр"
+
+msgid "Lancashire Heeler"
+msgstr "Ланкаширський хілер"
+
+msgid "Bombay"
+msgstr "Бомбей"
+
+msgid "Korat"
+msgstr "Корат"
+
+msgid "Egyptian Mau"
+msgstr "Єгипетський мау"
+
+msgid "Bracco Italiano"
+msgstr "Італійський бракк"
+
+msgid "European Burmese"
+msgstr "Європейська бурма"
+
+msgid "German Shepherd Dog"
+msgstr "Німецька вівчарка"
+
+msgid "Griffon Bruxellois"
+msgstr "Брюссельський гріффон"
+
+msgid "Japanese Bobtail"
+msgstr "Японський бобтейл"
+
+msgid "Bichon Frise"
+msgstr "Бішон фрізе"
+
+msgid "Russian Toy"
+msgstr "Російський той"
+
+msgid "English Shepherd"
+msgstr "Англійська вівчарка"
+
+msgid "Bengal"
+msgstr "Бенгал"
+
+msgid "Perro de Presa Canario"
+msgstr "Канарський дог"
+
+msgid "Wirehaired Vizsla"
+msgstr "Угорська жорсткошерста лягава"
+
+msgid "Bambino"
+msgstr "Бамбіно"
+
+msgid "American Staffordshire Terrier"
+msgstr "Американський стаффордширський тер'єр"
+
+msgid "Black and Tan Coonhound"
+msgstr "Чорно-підпалий кунхаунд"
+
+msgid "American Shorthair"
+msgstr "Американська короткошерста"
+
+msgid "Toy Fox Terrier"
+msgstr "Той-фокстер'єр"
+
+msgid "Basenji"
+msgstr "Басенджі"
+
+msgid "Persian"
+msgstr "Перська"
+
+msgid "Shiloh Shepherd"
+msgstr "Шилох шепард"
+
+msgid "Miniature American Shepherd"
+msgstr "Міні американська вівчарка"
+
+msgid "Bearded Collie"
+msgstr "Бородата колі"
+
+msgid "Aegean"
+msgstr "Егейська"
+
+msgid "Dutch Shepherd"
+msgstr "Голландська вівчарка"
+
+msgid "Briard"
+msgstr "Бріар"
+
+msgid "Samoyed"
+msgstr "Самоїд"
+
+msgid "British Longhair"
+msgstr "Британська довгошерста"
+
+msgid "Scottish Terrier"
+msgstr "Шотландський тер'єр"
+
+msgid "American Eskimo Dog"
+msgstr "Американський ескімоський шпіц"
+
+msgid "Lhasa Apso"
+msgstr "Лхаса апсо"
+
+msgid "Colorpoint Shorthair"
+msgstr "Колорпойнт короткошерстий"
+
+msgid "Standard Schnauzer"
+msgstr "Стандартний шнауцер"
+
+msgid "Norwegian Forest Cat"
+msgstr "Норвезька лісова"
+
+msgid "Balinese"
+msgstr "Балінез"
+
+msgid "Cocker Spaniel (American)"
+msgstr "Американський кокер-спанієль"
+
+msgid "Caucasian Shepherd (Ovcharka)"
+msgstr "Кавказька вівчарка"
+
+msgid "Cairn Terrier"
+msgstr "Керн-тер'єр"
+
+msgid "Bluetick Coonhound"
+msgstr "Блакитний кунхаунд"
+
+msgid "Leonberger"
+msgstr "Леонбергер"
+
+msgid "American Eskimo Dog (Miniature)"
+msgstr "Американський ескімоський шпіц (мініатюрний)"
+
+msgid "Japanese Chin"
+msgstr "Японський хін"
+
+msgid "Poodle (Miniature)"
+msgstr "Пудель (мініатюрний)"
+
+msgid "Dragon Li"
+msgstr "Дракон Лі"
+
+msgid "Chausie"
+msgstr "Чаузі"
+
+msgid "Chinese Shar-Pei"
+msgstr "Китайський шар-пей"
+
+msgid "Golden Retriever"
+msgstr "Золотистий ретрівер"
+
+msgid "Labrador Retriever"
+msgstr "Лабрадор ретрівер"
+
+msgid "Yorkshire Terrier"
+msgstr "Йоркширський тер'єр"
+
+msgid "Akita"
+msgstr "Акіта"
+
+msgid "Irish Setter"
+msgstr "Ірландський сетер"
+
+msgid "Basset Hound"
+msgstr "Бассет-хаунд"
+
+msgid "Havanese"
+msgstr "Гаванський бішон"
+
+msgid "Havana Brown"
+msgstr "Гавана браун"
+
+msgid "Akbash Dog"
+msgstr "Акбаш"
+
+msgid "Appenzeller Sennenhund"
+msgstr "Аппенцеллер зенненхунд"
+
+msgid "Shih Tzu"
+msgstr "Ши-тцу"
+
+msgid "Wirehaired Pointing Griffon"
+msgstr "Жорсткошерстий пойнтінг-гріффон"
+
+msgid "Siberian Husky"
+msgstr "Сибірський хаскі"
+
+msgid "Turkish Angora"
+msgstr "Турецька ангора"
+
+msgid "Tibetan Mastiff"
+msgstr "Тибетський мастиф"
+
+msgid "Bouvier des Flandres"
+msgstr "Фландрський бувьє"
+
+msgid "Finnish Spitz"
+msgstr "Фінський шпіц"
+
+msgid "American Foxhound"
+msgstr "Американський фоксхаунд"
+
+msgid "Weimaraner"
+msgstr "Веймаранер"
+
+msgid "British Shorthair"
+msgstr "Британська короткошерста"
+
+msgid "Alaskan Malamute"
+msgstr "Аляскинський маламут"
+
+msgid "Treeing Walker Coonhound"
+msgstr "Грейхаунд Уокер кунхаунд"
+
+msgid "Chantilly-Tiffany"
+msgstr "Шантільї-Тіффані"
+
+msgid "Turkish Van"
+msgstr "Турецький ван"
+
+msgid "Whippet"
+msgstr "Віппет"
+
+msgid "Great Pyrenees"
+msgstr "Піренейська гірська собака"
+
+msgid "Silky Terrier"
+msgstr "Шовковистий тер'єр"
+
+msgid "Pharaoh Hound"
+msgstr "Фараонова собака"
+
+msgid "Field Spaniel"
+msgstr "Філд-спанієль"
+
+msgid "American Bobtail"
+msgstr "Американський бобтейл"
+
+msgid "Papillon"
+msgstr "Папійон"
+
+msgid "Cane Corso"
+msgstr "Кане-корсо"
+
+msgid "Welsh Springer Spaniel"
+msgstr "Вельш-спрінгер-спанієль"
+
+msgid "Eurasier"
+msgstr "Євразієр"
+
+msgid "Plott"
+msgstr "Плотт-хаунд"
+
+msgid "Boston Terrier"
+msgstr "Бостон-тер'єр"
+
+msgid "Cornish Rex"
+msgstr "Корніш-рекс"
+
+msgid "Affenpinscher"
+msgstr "Аффенпінчер"
+
+msgid "Finnish Lapphund"
+msgstr "Фінський лапхунд"
+
+msgid "Keeshond"
+msgstr "Кеесхонд"
+
+msgid "Boxer"
+msgstr "Боксер"
+
+msgid "Rat Terrier"
+msgstr "Рет-тер'єр"
+
+msgid "American Water Spaniel"
+msgstr "Американський водяний спанієль"
+
+msgid "Soft Coated Wheaten Terrier"
+msgstr "М'якошерстний пшеничний тер'єр"
+
+msgid "Thai Ridgeback"
+msgstr "Тайський ріджбек"
+
+msgid "Cocker Spaniel"
+msgstr "Кокер-спанієль"
+
+msgid "Saint Bernard"
+msgstr "Сенбернар"
+
+msgid "Beagle"
+msgstr "Бігль"
+
+msgid "Abyssinian"
+msgstr "Абіссинська"
+
+msgid "Olde English Bulldogge"
+msgstr "Старий англійський бульдог"
+
+msgid "Burmese"
+msgstr "Бурманська"
+
+msgid "Ocicat"
+msgstr "Окіцет"
+
+msgid "Swedish Vallhund"
+msgstr "Швезький вальхунд"
+
+msgid "Puli"
+msgstr "Пулі"
+
+msgid "Australian Shepherd"
+msgstr "Австралійська вівчарка"
+
+msgid "Old English Sheepdog"
+msgstr "Бобтейл"
+
+msgid "Schipperke"
+msgstr "Схіпперке"
+
+msgid "Smooth Fox Terrier"
+msgstr "Гладкошерстний фокстер'єр"
+
+msgid "Arabian Mau"
+msgstr "Арабська мау"
+
+msgid "Alapaha Blue Blood Bulldog"
+msgstr "Алапахський чистокровний бульдог"
+
+msgid "Great Dane"
+msgstr "Німецький дог"
+
+msgid "Cavalier King Charles Spaniel"
+msgstr "Кавалер-кінг-чарльз-спанієль"
+
+msgid "Pumi"
+msgstr "Пумі"
+
+msgid "Cheetoh"
+msgstr "Чіто"
+
+msgid "Australian Cattle Dog"
+msgstr "Австралійська вівчарка"
+
+msgid "Gordon Setter"
+msgstr "Гордон-сетер"
+
+msgid "Nebelung"
+msgstr "Небелунг"
+
+msgid "Chow Chow"
+msgstr "Чау-чау"
+
+msgid "Doberman Pinscher"
+msgstr "Доберман"
+
+msgid "Siamese"
+msgstr "Сіамська"
+
+msgid "Burmilla"
+msgstr "Бурмілла"
+
+msgid "Australian Terrier"
+msgstr "Австралійський тер'єр"
+
+msgid "English Toy Spaniel"
+msgstr "Англійський той-спанієль"
+
+msgid "Italian Greyhound"
+msgstr "Італійський хорт"
+
+msgid "Bull Terrier"
+msgstr "Бультер'єр"
+
+msgid "Exotic Shorthair"
+msgstr "Екзотична короткошерста"
+
+msgid "American Bully"
+msgstr "Американський буллі"
+
+msgid "American Bulldog"
+msgstr "Американський бульдог"
+
+msgid "Munchkin"
+msgstr "Манчкін"
+
+msgid "Pekingese"
+msgstr "Пекінес"
+
+msgid "Kuvasz"
+msgstr "Кувас"
+
+msgid "Pug"
+msgstr "Мопс"
+
+msgid "Scottish Deerhound"
+msgstr "Шотландський дірхаунд"
+
+msgid "Nova Scotia Duck Tolling Retriever"
+msgstr "Новошотландський ретрівер"
+
+msgid "Beauceron"
+msgstr "Босерон"
+
+msgid "Tonkinese"
+msgstr "Тонкінська"
+
+msgid "Irish Wolfhound"
+msgstr "Ірландський вольфхаунд"
+
+msgid "Maine Coon"
+msgstr "Мейн-кун"
+
+msgid "Border Collie"
+msgstr "Бордер-коллі"
+
+msgid "Javanese"
+msgstr "Яванез"
+
+msgid "Bull Terrier (Miniature)"
+msgstr "Бультер'єр (мініатюрний)"
+
+msgid "Pembroke Welsh Corgi"
+msgstr "Вельш-коргі-пемброк"
+
+msgid "Azawakh"
+msgstr "Азавак"
+
+msgid "Border Terrier"
+msgstr "Бордер-тер'єр"
+
+msgid "Savannah"
+msgstr "Саванна"
+
+msgid "Birman"
+msgstr "Бірманська"
+
+msgid "Dogo Argentino"
+msgstr "Аргентинський дог"
+
+msgid "Ragdoll"
+msgstr "Регдол"
+
+msgid "Spanish Water Dog"
+msgstr "Іспанська водяна собака"
+
+msgid "Harrier"
+msgstr "Хар'єр"
+
+msgid "Bernese Mountain Dog"
+msgstr "Бернський зенненхунд"
+
+msgid "Barbet"
+msgstr "Барбет"
+
+msgid "York Chocolate"
+msgstr "Йоркська шоколадна"
+
+msgid "Belgian Malinois"
+msgstr "Бельгійська вівчарка малінуа"
+
+msgid "Coton de Tulear"
+msgstr "Котон-де-тулеар"
+
+msgid "California Spangled"
+msgstr "Каліфорнійська сплангл"
+
+msgid "Australian Mist"
+msgstr "Австралійська туманна"
+
+msgid "Staffordshire Bull Terrier"
+msgstr "Стаффордширський бультер'єр"
+
+msgid "Rottweiler"
+msgstr "Ротвейлер"
+
+msgid "American Curl"
+msgstr "Американський керл"
+
+msgid "Manx"
+msgstr "Менкс"
+
+msgid "Greyhound"
+msgstr "Грейхаунд"
+
+msgid "Khao Manee"
+msgstr "Као-мані"
+
+msgid "Boykin Spaniel"
+msgstr "Бойкін-спанієль"
+
+msgid "Clumber Spaniel"
+msgstr "Кламбер-спанієль"
+
+msgid "Basset Bleu de Gascogne"
+msgstr "Блакитний гасконський бассет"
+
+msgid "Xoloitzcuintli"
+msgstr "Шолоїцкуінтлі"
+
+msgid "Bloodhound"
+msgstr "Бладгаунд"
+
+msgid "Newfoundland"
+msgstr "Ньюфаундленд"
+
+msgid "Australian Kelpie"
+msgstr "Австралійський кельпі"
+
+msgid "English Setter"
+msgstr "Англійський сетер"
+
+msgid "English Springer Spaniel"
+msgstr "Англійський спрінгер-спанієль"
+
+msgid "Cymric"
+msgstr "Кімрик"
+
+msgid "Alaskan Husky"
+msgstr "Аляскинський хаскі"
+
+msgid "Japanese Spitz"
+msgstr "Японський шпіц"
+
+msgid "Bullmastiff"
+msgstr "Бульмастиф"
+
+msgid "Pixie-bob"
+msgstr "Піксі-боб"
+
+msgid "American Pit Bull Terrier"
+msgstr "Американський піт-бультер'єр"
+
+msgid "Giant Schnauzer"
+msgstr "Ризеншнауцер"
+
+msgid "Lagotto Romagnolo"
+msgstr "Лаготто-романьоло"
+
+msgid "American Wirehair"
+msgstr "Американська жорсткошерста"
+
+msgid "Devon Rex"
+msgstr "Девон-рекс"
+
+msgid "African Hunting Dog"
+msgstr "Африканська мисливська собака"
+
+msgid "Snowshoe"
+msgstr "Сноу-шу"
+
+msgid "White Shepherd"
+msgstr "Біла вівчарка"
+
+msgid "Selkirk Rex"
+msgstr "Селкірк-рекс"
+
+msgid "Oriental"
+msgstr "Орієнтальна"
+
+msgid "Miniature Schnauzer"
+msgstr "Цвергшнауцер"
+
+msgid "Maltese"
+msgstr "Мальтійська болонка"
+
+msgid "Toyger"
+msgstr "Тойгер"
+
+msgid "Boerboel"
+msgstr "Бурбуль"
+
+msgid "Norwich Terrier"
+msgstr "Норвіч-тер'єр"
+
+msgid "Pomeranian"
+msgstr "Померанський шпіц"
+
+msgid "German Shorthaired Pointer"
+msgstr "Німецький короткошерстий пойнтер"
+
+msgid "Redbone Coonhound"
+msgstr "Редбон кунхаунд"
+
+# Origins translations
+msgid "United Kingdom, England"
+msgstr "Об'єднане Королівство, Англія"
+
+msgid "United States"
+msgstr "Сполучені Штати"
+
+msgid "Thailand"
+msgstr "Таїланд"
+
+msgid "Somalia"
+msgstr "Сомалі"
+
+msgid "Burma"
+msgstr "Бірма"
+
+msgid "Japan"
+msgstr "Японія"
+
+msgid "France"
+msgstr "Франція"
+
+msgid "Egypt"
+msgstr "Єгипет"
+
+msgid "United Kingdom"
+msgstr "Об'єднане Королівство"
+
+msgid "Canada"
+msgstr "Канада"
+
+msgid "Iran (Persia)"
+msgstr "Іран (Персія)"
+
+msgid "Greece"
+msgstr "Греція"
+
+msgid "Singapore"
+msgstr "Сінгапур"
+
+msgid "Norway"
+msgstr "Норвегія"
+
+msgid "Isle of Man"
+msgstr "Острів Мен"
+
+msgid "Afghanistan, Iran, Pakistan"
+msgstr "Афганістан, Іран, Пакистан"
+
+msgid "Germany, France"
+msgstr "Німеччина, Франція"
+
+msgid "Cyprus"
+msgstr "Кіпр"
+
+msgid "China"
+msgstr "Китай"
+
+msgid "Australia"
+msgstr "Австралія"
+
+msgid "United Arab Emirates"
+msgstr "Об'єднані Арабські Емірати"

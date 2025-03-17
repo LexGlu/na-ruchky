@@ -3,6 +3,7 @@ from uuid import UUID
 
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
+from django.utils.translation import gettext_lazy as _
 from ninja import Router, File, Query
 from ninja.pagination import paginate
 from ninja.files import UploadedFile
@@ -401,7 +402,14 @@ def list_breeds(
             # Invalid weight format, ignore this filter
             pass
 
-    return breeds.order_by("species", "name")
+    # TODO: Use django-modeltranslation to translate data from the database (or similar) to the user's language
+    breeds = breeds.order_by("species", "name")
+    for breed in breeds:
+        breed.name = str(_(breed.name))
+        if breed.origin:
+            breed.origin = str(_(breed.origin))
+
+    return breeds
 
 
 @breeds_router.get("/{id}", response=BreedSchema)
@@ -409,4 +417,11 @@ def get_breed(request: HttpRequest, id: UUID):
     """
     Get detailed information about a specific breed.
     """
-    return get_object_or_404(Breed, id=id, is_active=True)
+    breed = get_object_or_404(Breed, id=id, is_active=True)
+
+    # TODO: Use django-modeltranslation to translate data from the database (or similar) to the user's language
+    breed.name = str(_(breed.name))
+    if breed.origin:
+        breed.origin = str(_(breed.origin))
+
+    return breed
