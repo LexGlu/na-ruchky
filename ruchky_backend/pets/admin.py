@@ -57,6 +57,7 @@ class BreedAdmin(admin.ModelAdmin):
         (None, {"fields": ("name", "species", "description", "origin", "is_active")}),
         (_("Physical Attributes"), {"fields": ("life_span", "weight")}),
         (_("Image"), {"fields": ("image", "image_preview_large")}),
+        (_("Hover Image"), {"fields": ("image_hover",)}),
     )
     readonly_fields = ("image_preview_large",)
 
@@ -69,6 +70,16 @@ class BreedAdmin(admin.ModelAdmin):
         return "-"
 
     image_preview.short_description = _("Preview")
+
+    def image_hover_preview_large(self, obj):
+        if obj.image_hover:
+            return format_html(
+                '<img src="{}" style="max-height: 200px; max-width: 200px;" />',
+                obj.image_hover.url,
+            )
+        return "-"
+
+    image_hover_preview_large.short_description = _("Hover Image Preview")
 
     def image_preview_large(self, obj):
         if obj.image:

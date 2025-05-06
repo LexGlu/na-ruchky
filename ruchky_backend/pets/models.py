@@ -67,6 +67,14 @@ class Breed(UUIDMixin, DateTimeMixin):
         null=True,
         help_text=_("Representative image of the breed"),
     )
+    image_hover = models.ImageField(
+        verbose_name=_("Breed Image Hover"),
+        upload_to=generate_filename,
+        storage=storage,
+        blank=True,
+        null=True,
+        help_text=_("Image displayed on hover"),
+    )
 
     is_active = models.BooleanField(_("Active"), default=True)
 

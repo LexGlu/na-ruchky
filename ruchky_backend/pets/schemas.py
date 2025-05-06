@@ -18,6 +18,7 @@ from ruchky_backend.pets.models import (
 
 class BreedSchema(ModelSchema):
     image_url: Optional[str] = None
+    image_hover_url: Optional[str] = None
 
     class Meta:
         model = Breed
@@ -30,7 +31,6 @@ class BreedSchema(ModelSchema):
             "life_span",
             "weight",
             "is_active",
-            "image",
         ]
 
     @staticmethod
@@ -38,6 +38,13 @@ class BreedSchema(ModelSchema):
         """Return the URL for the breed image if available"""
         if obj.image:
             return obj.image.url
+        return None
+
+    @staticmethod
+    def resolve_image_hover_url(obj: Breed) -> Optional[str]:
+        """Return the URL for the breed hover image if available"""
+        if obj.image_hover:
+            return obj.image_hover.url
         return None
 
 
