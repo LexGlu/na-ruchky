@@ -136,6 +136,7 @@ class PetAdmin(admin.ModelAdmin):
                     "description",
                     "health",
                     "is_vaccinated",
+                    "is_hypoallergenic",
                 )
             },
         ),

@@ -97,6 +97,7 @@ class PetSchema(ModelSchema):
             "birth_date",
             "location",
             "is_vaccinated",
+            "is_hypoallergenic",
             "short_description",
             "description",
             "health",

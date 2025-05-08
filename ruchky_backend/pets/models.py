@@ -114,6 +114,7 @@ class Pet(UUIDMixin, DateTimeMixin):
     birth_date = models.DateField(_("Birth Date"))
     location = models.CharField(_("Location"), max_length=100, blank=True, null=True)
     is_vaccinated = models.BooleanField(_("Vaccinated"), default=False)
+    is_hypoallergenic = models.BooleanField(_("Hypoallergenic"), default=False)
 
     short_description = models.TextField(_("Short Description"), blank=True, null=True)
     description = models.TextField(_("Description"), blank=True, null=True)
