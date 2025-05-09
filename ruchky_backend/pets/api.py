@@ -47,6 +47,7 @@ def list_pets(
     breed: str = None,
     location: str = None,
     is_vaccinated: bool = None,
+    is_hypoallergenic: bool = None,
     owner_id: UUID = None,
     organization_id: UUID = None,
 ):
@@ -68,6 +69,8 @@ def list_pets(
         pets = pets.filter(location__icontains=location)
     if is_vaccinated is not None:
         pets = pets.filter(is_vaccinated=is_vaccinated)
+    if is_hypoallergenic is not None:
+        pets = pets.filter(is_hypoallergenic=is_hypoallergenic)
     if owner_id:
         pets = pets.filter(owner_id=owner_id)
     if organization_id:
@@ -94,6 +97,7 @@ def list_pet_listings(
     breed: Optional[str] = None,
     location: Optional[str] = None,
     is_vaccinated: Optional[bool] = None,
+    is_hypoallergenic: bool = None,
     min_age: Optional[int] = None,
     max_age: Optional[int] = None,
     owner_id: Optional[UUID] = None,
@@ -127,6 +131,8 @@ def list_pet_listings(
         filters["pet__location__icontains"] = location.strip()
     if is_vaccinated is not None:
         filters["pet__is_vaccinated"] = is_vaccinated
+    if is_hypoallergenic is not None:
+        filters["pet__is_hypoallergenic"] = is_hypoallergenic
     if owner_id is not None:
         filters["pet__owner_id"] = owner_id
     if organization_id is not None:
