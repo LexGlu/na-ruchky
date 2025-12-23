@@ -1,3 +1,4 @@
+from django.conf import settings
 from ninja import NinjaAPI
 from django.contrib.admin.views.decorators import staff_member_required
 
@@ -11,8 +12,8 @@ api = NinjaAPI(
     version="0.1.0",
     description="API for Na Ruchky project",
     docs_decorator=staff_member_required,
-    csrf=True,
-    docs_url="/docs/",
+    docs_url="/docs/" if settings.DEBUG else None,
+    openapi_url="/openapi.json/" if settings.DEBUG else None,
 )
 
 api.add_router("/auth/", auth_router)

@@ -40,6 +40,9 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    "unfold",
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -250,5 +253,46 @@ SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
 
 LOGIN_REDIRECT_URL = "http://127.0.0.1:3000"
 LOGOUT_REDIRECT_URL = "/"
+
+
+UNFOLD = {
+    "SITE_TITLE": "Na Ruchky Admin",
+    "SITE_HEADER": "Na Ruchky",
+    "SITE_URL": "/",
+    "LINKS": [
+        {
+            "title": "Website",
+            "icon": "public",
+            "link": "/",
+        },
+    ],
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": True,
+        "navigation": [
+            {
+                "title": "Navigation",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "Dashboard",
+                        "icon": "dashboard",
+                        "link": "/admin/",
+                    },
+                    {
+                        "title": "Users",
+                        "icon": "people",
+                        "link": "/admin/users/user/",
+                    },
+                    {
+                        "title": "Pets",
+                        "icon": "pets",
+                        "link": "/admin/pets/pet/",
+                    },
+                ],
+            },
+        ],
+    },
+}
 
 APPEND_SLASH = True

@@ -1,11 +1,12 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
+from unfold.admin import ModelAdmin, TabularInline
 
 from ruchky_backend.pets.models import Breed, Pet, PetListing, PetImage, PetSocialLink
 
 
-class PetImageInline(admin.TabularInline):
+class PetImageInline(TabularInline):
     """
     Inline admin for pet images.
     """
@@ -26,7 +27,7 @@ class PetImageInline(admin.TabularInline):
     image_preview.short_description = _("Preview")
 
 
-class PetSocialLinkInline(admin.TabularInline):
+class PetSocialLinkInline(TabularInline):
     """
     Inline admin for pet social links.
     """
@@ -37,7 +38,7 @@ class PetSocialLinkInline(admin.TabularInline):
 
 
 @admin.register(Breed)
-class BreedAdmin(admin.ModelAdmin):
+class BreedAdmin(ModelAdmin):
     """
     Admin for managing breeds.
     """
@@ -93,7 +94,7 @@ class BreedAdmin(admin.ModelAdmin):
 
 
 @admin.register(Pet)
-class PetAdmin(admin.ModelAdmin):
+class PetAdmin(ModelAdmin):
     """
     Admin for managing pets.
     """
@@ -152,15 +153,12 @@ class PetAdmin(admin.ModelAdmin):
     breed_display.short_description = _("Breed")
 
     def image_tag(self, obj):
-        content = (
-            f'<img src="{obj.profile_picture.image.url}" style="max-height: 35px; width: 35px; border-radius: 50%;" />'
-            if obj.profile_picture
-            else "-"
-        )
-
-        return format_html(
-            f'<div style="width: 100%; text-align: center;">{content}</div>'
-        )
+        if obj.profile_picture:
+            return format_html(
+                '<div style="width: 100%; text-align: center;"><img src="{}" style="max-height: 35px; width: 35px; border-radius: 50%;" /></div>',
+                obj.profile_picture.image.url,
+            )
+        return "-"
 
     image_tag.short_description = _("Profile Picture")
 
@@ -176,7 +174,7 @@ class PetAdmin(admin.ModelAdmin):
 
 
 @admin.register(PetImage)
-class PetImageAdmin(admin.ModelAdmin):
+class PetImageAdmin(ModelAdmin):
     """
     Admin for managing pet images.
     """
@@ -197,7 +195,7 @@ class PetImageAdmin(admin.ModelAdmin):
 
 
 @admin.register(PetListing)
-class PetListingAdmin(admin.ModelAdmin):
+class PetListingAdmin(ModelAdmin):
     """
     Admin for managing pet listings.
     """
