@@ -1,14 +1,25 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
+from django.contrib.auth.models import Group
 from django.utils.translation import gettext_lazy as _
-from django.utils.html import format_html
+from django.utils.html import format_html_join
 from django.urls import reverse
+from unfold.admin import ModelAdmin
+from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 
 from ruchky_backend.users.models import User, OrganizationProfile
 
+admin.site.unregister(Group)
+
+
+@admin.register(Group)
+class GroupAdmin(BaseGroupAdmin, ModelAdmin):
+    pass
+
 
 @admin.register(OrganizationProfile)
-class OrganizationProfileAdmin(admin.ModelAdmin):
+class OrganizationProfileAdmin(ModelAdmin):
     """
     Admin for the organization or charity profile with read-only user display.
     """
@@ -23,15 +34,18 @@ class OrganizationProfileAdmin(admin.ModelAdmin):
         if not users:
             return "-"
 
-        user_links = []
-        for user in users:
-            url = reverse("admin:users_user_change", args=[user.id])
-            user_links.append(f'<a href="{url}">{user.email}</a>')
-        return format_html("<br>".join(user_links))
+        user_data = [
+            (reverse("admin:users_user_change", args=[user.id]), user.email)
+            for user in users
+        ]
+        return format_html_join("<br>", '<a href="{}">{}</a>', user_data)
 
 
 @admin.register(User)
-class CustomUserAdmin(UserAdmin):
+class CustomUserAdmin(BaseUserAdmin, ModelAdmin):
+    form = UserChangeForm
+    add_form = UserCreationForm
+    change_password_form = AdminPasswordChangeForm
 
     fieldsets = (
         (None, {"fields": ("id", "email", "password")}),
